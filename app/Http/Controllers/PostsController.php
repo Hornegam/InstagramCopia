@@ -17,7 +17,7 @@ class PostsController extends Controller
    public function create(){
        return view('posts.create');
    }
-/*
+
     //funcao para postagem
     public function store(){
 
@@ -51,7 +51,7 @@ class PostsController extends Controller
         //para verificar se os dados estao corretos, é um dump de todas as informacoes
         //dd(request()->all());
     }
-*/
+
     public function show(\App\Post $post){
         return view('posts.show', compact('post'));
     }

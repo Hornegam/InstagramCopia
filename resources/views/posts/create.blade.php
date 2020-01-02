@@ -10,7 +10,7 @@
                     <h1>Adicionar nova postagem</h1>
                 </div>
                 <div class="form-group row">
-                    <label for="caption" class="col-md-4 col-form-label"><strong>Post Caption</strong></label>
+                    <label for="caption" class="col-md-4 col-form-label"><strong>Legenda</strong></label>
     
                     
                         <input id="caption" 
@@ -30,7 +30,7 @@
                 
                 
                 <div class="row">
-                    <label for="image" class="col-md-4 col-form-label"><strong>Post Image</strong></label>
+                    <label for="image" class="col-md-4 col-form-label"><strong>Selecionar Imagem</strong></label>
                     <input type="file" class="form-control-file" id="image" name="image">
         
                     @error('image')

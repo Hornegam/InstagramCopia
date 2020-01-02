@@ -7,11 +7,13 @@ use App\User;
 
 class ProfilesController extends Controller
 {
-    public function index($user)
+    public function index(\App\User $user)
     {
-        $user = \App\User::findOrFail($user);
-        return view('home', [
-            'user' => $user,
-        ]);
+        return view('profiles.index',compact('user'));
     }
+
+    public function edit(\App\User $user){
+
+        return view('profiles.edit', compact('user'));
+    } 
 }

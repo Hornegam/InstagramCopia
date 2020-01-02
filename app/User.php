@@ -38,7 +38,9 @@ class User extends Authenticatable
     ];
     
     public function posts(){
-        return $this->hasMany(Post::class);
+        //ORDER BY FUNCIONA PARA ORDENAR DO ULTIMO PARA O PRIMEIRO NO FEED DE POSTAGEM
+        //SENDO QUE PODE SER ORDENADO PRO CREATED_AT OU UPDATE_AT
+        return $this->hasMany(Post::class)->orderBy('created_at', 'DESC');
     }
 
     public function profile(){

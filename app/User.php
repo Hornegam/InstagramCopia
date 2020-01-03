@@ -36,7 +36,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
+    protected static function boot(){
+        parent::boot(); 
+
+        static::created(function ($user){
+            $user->profile()->create([
+                'title' => $user->username,
+
+            ]);
+        });
+    }
     public function posts(){
         //ORDER BY FUNCIONA PARA ORDENAR DO ULTIMO PARA O PRIMEIRO NO FEED DE POSTAGEM
         //SENDO QUE PODE SER ORDENADO PRO CREATED_AT OU UPDATE_AT

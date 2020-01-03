@@ -4,15 +4,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 p-4 mx-auto">
-            <img src="/svg/menia.jpg" style="max-height: 200px" class="rounded-circle pr-10 mx-auto">
+        <img src="{{$user->profile->profileImage()}}" style="max-height: 200px" class="rounded-circle pr-10 mx-auto">
         </div>
         <div class="col-md-9 pt-5 pl-5">
             <div class="d-flex justify-content-between align-items-baseline">
-                <h1>{{ $user ->username}}</h1>
+                <div class="d-flex align-items-center">
+                    <h1>{{ $user ->username}}</h1>
+                    <div>
+                    <follow-button user-id="{{ $user->id }}"></follow-button>
+                    </div>
+                </div>
+                
+
+                @can('update', $user->profile)
                 <a href="/p/create">Nova Postagem</a>
+                @endcan
                 
             </div>
-            <div><a href="{{$user->id}}/edit">Editar Perfil</a></div>
+            @can('update', $user->profile)
+                <div><a href="{{$user->id}}/edit">Editar Perfil</a></div>
+            @endcan
             <div class="d-flex">
                 <div class="pr-3"><strong>{{ $user ->posts->count()}}</strong> posts</div>
                 <div class="pr-3"><strong>23k</strong> seguidores</div>
@@ -22,7 +33,7 @@
                 {{ $user-> profile-> title}}
             </div>
             <div>{{ $user -> profile -> description}}</div>
-            <div><a href="#"><strong>{{$user -> profile -> url}}</strong></div>
+            <div><a href="{{$user -> profile -> url}}"><strong>{{$user -> profile -> url}}</strong></div>
         </div>
     </div>
     <div class="row pt-4">

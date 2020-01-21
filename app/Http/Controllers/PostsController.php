@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Post;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -12,6 +12,18 @@ class PostsController extends Controller
     public function __construct(){
         $this->middleware('auth');
 
+    }
+
+    public function index(){
+        //Pega todos os ids dos usuarios autenticados que o perfil está seguindo
+        //o pluck serve para unir todos
+        $users = auth()->user()->following()->pluck('profiles.user_id');
+        //Junta todos em uma variavel, pois sem essa linha o sistema não sabe qual user_id usar
+        //basicamente essa linha fala para utilizar todos os ID e pegas os posts
+      //  $posts = Post::whereIn('user_id',$users)->orderBy('created_at','DESC')->get();
+        //OU PODE UTILIZAR A MESMA LINHA, MESMO RESULTADOS
+        $posts = Post::whereIn('user_id',$users)->latest()->get();
+        return view('posts.index',compact('posts'));
     }
 
    public function create(){

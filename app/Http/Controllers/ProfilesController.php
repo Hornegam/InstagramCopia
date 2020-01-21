@@ -10,7 +10,14 @@ class ProfilesController extends Controller
 {
     public function index(\App\User $user)
     {
-        return view('profiles.index',compact('user'));
+        //Estrutura de condição (Condição) ? Verdadeiro : Falso
+        //Basicamente explica se o usuário estiver autenticado retorna o número de seguidores
+        //Senão retorna falso
+        $follows=(auth()->user()) ? auth()->user()->following->contains($user->id) : false;
+
+ //       dd($follows);
+
+        return view('profiles.index',compact('user','follows'));
     }
 
     public function edit(User $user){

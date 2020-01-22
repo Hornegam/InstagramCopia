@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Cache;
 
 class ProfilesController extends Controller
 {
@@ -16,8 +17,31 @@ class ProfilesController extends Controller
         $follows=(auth()->user()) ? auth()->user()->following->contains($user->id) : false;
 
  //       dd($follows);
+ //Para deixar em cache em laravel, primeiro argumento é o nome, depois quanto tempo quer deixar la
+ // e depois o valor que deseja ser armazenado
+        $postsCount = Cache::remember(
+            'count.posts'. $user->id, 
+            now()->addSeconds(30), 
+            function() use ($user){
+            return $user ->posts->count();
+        });
 
-        return view('profiles.index',compact('user','follows'));
+
+        $followersCount = Cache::remember(
+            'count.followers'. $user->id, 
+            now()->addSeconds(30), 
+            function() use ($user){
+            return $user->profile->followers->count();
+        });
+        
+        $followingCount = Cache::remember(
+            'count.following'. $user->id, 
+            now()->addSeconds(30), 
+            function() use ($user){
+            return $user->following->count();
+        });
+
+        return view('profiles.index',compact('user','follows','postsCount','followersCount','followingCount'));
     }
 
     public function edit(User $user){
